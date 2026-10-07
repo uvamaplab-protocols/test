@@ -18,23 +18,18 @@
           "icon": "/assets/home_instructions.png"
         },
         {
-          "type": "devices",
-          "summary": [
-            {
-              "device_id": "device_1",
-              "text": "Oura Ring",
-              "icon": {
-                "url": "/assets/oura.png"
-              }
-            },
-            {
-              "device_id": "device_2",
-              "text": "WisePill",
-              "icon": {
-                "url": "/assets/wisepill.png"
-              }
-            }
-          ]
+          "type": "oura",
+          "connection_id": "connection_1",
+          "goal_id": "goal_1"
+        },
+        {
+          "type": "wisepill",
+          "connection_id": "connection_2",
+          "goal_id": "goal_2"
+        },
+         {
+          "type": "epic",
+          "connection_id": "connection_3"
         },
         {
           "type": "sessions",
@@ -231,58 +226,61 @@
       "interval": "00:00:01"
     }
   ],
-  "devices": {
-    "device_1": {
+  "connections": {
+    "connection_1": {
       "type": "Oura",
-      "connect_title": "Login to Oura",
-      "connect_description": "This study requires Oura integration. We are about to send you to Oura to authenticate and then you will be redirected back to our app",
       "android_sync": "deeplink://com.ouraring.oura",
       "ios_sync": "deeplink://Oura://",
       "webhook_data_types": [
-        "tag",
-        "daily_activity",
+        "sleep",
         "workout",
-        "sleep"
+        "daily_activity"
       ],
       "scopes": [
-        "tag",
         "daily",
         "workout",
         "sleep",
         "ring_configuration"
-      ],
-      "jobs": [
-        "oura_job_1",
-        "oura_job_2"
       ]
     },
-    "device_2": {
-      "type": "WisePill",
-      "connect_title": "Enter imei number",
-      "connect_description": "Enter imei number of your WisePill box to connect. This will allow us to track when you take your medication and send you reminders if you forget."
+    "connection_2": {
+      "type": "WisePill"
+    },
+    "connection_3": {
+      "type": "Epic",
+      "scopes": [
+        "offline_access",
+        "launch/patient",
+        "patient/Encounter.read",
+        "openid",
+        "fhirUser"
+      ],
+      "show": ["visits"]
     }
   },
   "goals": {
     "goal_1": {
-      "device_id": "device_1",
+      "connection_id": "connection_1",
       "data_type": "daily_activity",
       "type": "percentile",
-      "field": "steps",
+      "field": "active",
       "required_days": 7,
-      "percentile": 0.6
+      "percentile": 0.6,
+      "name": "Active Minutes"
     },
     "goal_2": {
-      "device_id": "device_2",
+      "connection_id": "connection_2",
       "data_type": "datums",
       "type": "percentage",
       "field": "events",
       "required_days": 7,
-      "target_value": 1
+      "target_value": 1,
+      "name": "Pills Adherence"
     }
   },
   "jobs": {
     "oura_job_1": {
-      "type": "device",
+      "type": "connection",
       "service": "Oura",
       "data_type": "daily_activity",
       "days": 1,
@@ -294,7 +292,7 @@
       "notification_id": "notification_1"
     },
     "oura_job_2": {
-      "type": "device",
+      "type": "connection",
       "service": "Oura",
       "data_type": "daily_activity",
       "days": 1,
