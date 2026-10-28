@@ -7,6 +7,30 @@
     }
   ],
   "start_flow": "flow://flows/survey1",
+  "agent": {
+    "name": "Trails Test Assistant",
+    "model": "sonnet-5",
+    "max_tokens": 400,
+    "max_tool_rounds": 3,
+    "history": 20,
+    "tools": ["get_enrollment_status", "get_my_studies", "get_study", "get_completed_activities", "get_app_settings"],
+    "instructions": "This is the Digital Trails test study, used by the team to try out app features. Participants here are usually testers. Help them find their way around the surveys, connections and settings, and say plainly when something is a test fixture rather than a real study activity.",
+    "knowledge": [
+      {
+        "title": "What this study is",
+        "text": "A demonstration protocol covering surveys, an Oura ring connection with a step goal, reminders, probes and messaging. Nothing collected here is used for research."
+      },
+      {
+        "title": "Surveys",
+        "text": "There are four surveys. Survey 1 is the start flow and runs once at enrollment; the others repeat on their own schedules and show on the home screen when a window is open."
+      },
+      {
+        "title": "Leaving",
+        "text": "Testers can unenroll at any time from Settings. Re-enrolling with the code test starts fresh."
+      }
+    ],
+    "context": { "enrollment": true }
+  },
   "home": {
     "element": {
       "type": "list",
